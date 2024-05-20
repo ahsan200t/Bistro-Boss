@@ -1,9 +1,13 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart]=useCart()
+  console.log(cart)
   const handleLogout = () => {
     logOut()
       .then(() => {})
@@ -24,6 +28,14 @@ const Navbar = () => {
       </li>
       <li>
         <Link to="/order/salad">OUR SHOP</Link>
+      </li>
+      <li>
+        <Link to='/dashboard/cart'>
+          <a>
+            <FaShoppingCart></FaShoppingCart>
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </a>
+        </Link>
       </li>
 
       {user ? (
