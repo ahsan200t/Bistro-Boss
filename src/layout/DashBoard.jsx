@@ -1,15 +1,46 @@
-import { FaAd, FaHome, FaList, FaShoppingCart } from "react-icons/fa";
-import { FaCalendar } from "react-icons/fa6";
+import { FaAd, FaHome, FaList, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaBook, FaCalendar, FaUsers, FaUtensils } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 
 const DashBoard = () => {
+  const isAdmin=true;
   return (
     <div className="flex gap-10">
       <div className="w-64 min-h-screen bg-orange-400">
         <ul>
+           {
+            isAdmin ? <>
+             <li className="menu">
+                <NavLink to='/dashboard/adminHome'>
+                    <FaHome></FaHome>
+                    Admin Home</NavLink>
+            </li>
+             <li className="menu">
+                <NavLink to='/dashboard/addItems'>
+                    <FaUtensils></FaUtensils>
+                    Add Items</NavLink>
+            </li>
             <li className="menu">
+                <NavLink to='/dashboard/manageItems'>
+                    <FaList></FaList>
+                    Manage Imems</NavLink>
+            </li>
+            <li className="menu">
+                <NavLink to='/dashboard/manageBookings'>
+                    <FaBook></FaBook>
+                    Manage Bookings</NavLink>
+            </li>
+            <li className="menu">
+                <NavLink to='/dashboard/allUsers'>
+                    <FaUsers></FaUsers>
+                    All Users</NavLink>
+            </li>
+            </>
+            :
+            <>
+             <li className="menu">
                 <NavLink to='/dashboard/cart'>
                     <FaShoppingCart></FaShoppingCart>
                     My Cart</NavLink>
@@ -34,6 +65,9 @@ const DashBoard = () => {
                     <FaList></FaList>
                     My Bookings</NavLink>
             </li>
+            </>
+           }
+
             <div className="divider"></div>
             <li className="menu">
                 <NavLink to='/'>
