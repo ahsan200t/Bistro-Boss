@@ -4,8 +4,11 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
+  const axiosPublic=useAxiosPublic();
     const {createUser, updateUserProfile}=useContext(AuthContext)
     const navigate=useNavigate()
   const {
@@ -22,17 +25,26 @@ const SignUp = () => {
         console.log(loggedUser);
         updateUserProfile(data.name, data.photoURL)
         .then(()=>{
-          console.log('user profile info updated')
-          reset()
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Account Created Successfully",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          navigate('/')
-        })
+          const userInfo={
+            name: data.name,
+            email: data.email
+          }
+          axiosPublic.post('/users',userInfo)
+          .then(res=>{
+            if(res.data.insertedId){
+              reset()
+              Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Account Created Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/')
+            }
+          })
+          
+            })
         .catch(error=>{
           console.log(error)
         })
@@ -47,7 +59,6 @@ const SignUp = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Sign Up now!</h1>
             <p className="py-6">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
@@ -55,6 +66,9 @@ const SignUp = () => {
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <h1 className="text-5xl font-bold text-center my-16">Sign Up now!</h1>
+            <div className="divider">Sign Up With</div>
+            <div className="text-center"><SocialLogin></SocialLogin></div>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">

@@ -8,6 +8,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Login = () => {
   const [disable, setDisable] = useState(true);
   const { signIn } = useContext(AuthContext);
@@ -71,6 +72,8 @@ const Login = () => {
           </div>
           <div className="card md:w-2/3 max-w-sm shadow-2xl bg-base-100">
             <h1 className="text-5xl font-bold text-center my-10">Login now!</h1>
+            <div className="divider">Log in With</div>
+            <div className="text-center"><SocialLogin></SocialLogin></div>
             <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
                 <label className="label">
